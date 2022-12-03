@@ -1,20 +1,21 @@
-import { AiOutlineEdit } from 'react-icons/ai'
+import { AiFillDelete } from 'react-icons/ai'
 // import { Link } from 'react-router-dom'
 
-const Transaction = ({ transaction, onAdd}) => {
+const Transaction = ({ transaction, onDelete}) => {
   return (
     <div className='transaction' >
       <>
         
         <h3>
-            {transaction.TransactionID} 
-            {transaction.TransactionAmount} 
-            <AiOutlineEdit style={{ color: 'red', cursor: 'pointer'}} 
+            Transaction No.: {transaction.TransactionID} 
+            <AiFillDelete style={{ color: 'red', cursor: 'pointer'}} 
                      onClick={() => 
-                     onAdd(transaction.TransactionID)} />
+                     onDelete(transaction.TransactionID)} />
         </h3>
-        <p>{transaction.Date}</p>
-        <p>{transaction.Comment}</p>
+        <p>Transaction Account:{transaction.TransactionAmount}</p>
+        <p>Receiving Account: {transaction.ReceivingAccountID}</p>
+        <p>Date: {transaction.Date}</p>
+        <p>Comment: {transaction.Comment}</p>
         {/* <p><Link to={`/transaction/${transaction.TransactionID}`}>
           View Details 
         </Link></p> */}

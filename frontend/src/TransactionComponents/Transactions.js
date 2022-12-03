@@ -52,9 +52,9 @@ const Transactions = ({ onDelete, onAdd, showonAdd }) => {
     ])
 
     //Delete transaction
-    const deleteTransaction = (AccountID) => {
-    //console.log('delete',id);
-    setTransaction(transactions.filter((transaction) => transaction.AccountID !== AccountID ))
+    const deleteTransaction = (TransactionID) => {
+    //console.log('delete',TransactionID);
+    setTransaction(transactions.filter((transaction) => transaction.TransactionID !== TransactionID ))
   }
 
    //Add Transaction
@@ -76,7 +76,7 @@ const Transactions = ({ onDelete, onAdd, showonAdd }) => {
 		showAdd={showAddTransaction} />
 		{showAddTransaction && <AddTransaction onAdd={AddTransaction} />} */}
         
-        {transactions.map((transaction) => (<Transaction transaction={transaction} onDelete={onDelete} onAdd={onDelete} />
+        {transactions.map((transaction) => (<Transaction transaction={transaction} onDelete={deleteTransaction} />
         ))}
     </>
   )
