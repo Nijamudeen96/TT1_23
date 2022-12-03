@@ -15,7 +15,7 @@ def login():
 
 @app.route('/decode')
 def decode():
-   auth_token = request.get_json()['auth_token']
+   auth_token = request.headers.get('Authorization')
    return auth.is_valid_auth(auth_token)
 
 if __name__ == '__main__':
