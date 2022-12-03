@@ -1,6 +1,7 @@
 import {Link, useHistory} from "react-router-dom";
 import { useState, useContext, React } from "react";
 import AuthContext from "../Store/auth-context";
+import "./AuthForm.css";
 
 const AuthForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -53,35 +54,63 @@ const history = useHistory();
   };
 
   return (
-    <form onSubmit={SubmitHandler}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          value={enteredUsername}
-          onChange={usernameChangeHandler}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={enteredPassword}
-          onChange={passwordChangeHandler}
-        />
-      </div>
-      <div>
-        <button type="submit">Login</button>
-        </div>
-        <div>
-            <Link to= "/SignUp">
-        <button type="submit" >Get Started</button>
-        </Link>
-      </div>
-    </form>
-  );
+    // <form onSubmit={SubmitHandler}>
+    //   <div>
+    //     <label htmlFor="username">Username</label>
+    //     <input
+    //       type="text"
+    //       id="username"
+    //       value={enteredUsername}
+    //       onChange={usernameChangeHandler}
+    //     />
+    //   </div>
+    //   <div>
+    //     <label htmlFor="password">Password</label>
+    //     <input
+    //       type="password"
+    //       id="password"
+    //       value={enteredPassword}
+    //       onChange={passwordChangeHandler}
+    //     />
+    //   </div>
+    //   <div>
+    //     <button type="submit">Login</button>
+    //     </div>
+    //     <div>
+    //         <Link to= "/SignUp">
+    //     <button type="submit" >Get Started</button>
+    //     </Link>
+    //   </div>
+    // </form>
+    <div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true"/>
+
+			<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="username" placeholder="Username" required=""/>
+					<input type="text" name="firstname" placeholder="First Name" required=""/>
+          <input type="text" name="lastname" placeholder="Last Name" required=""/>
+          <input type="email" name="email" placeholder="Email" required=""/>
+          <input type="text" name="address" placeholder="Address" required=""/>
+          <div>
+          <label>Opt for physical statements?</label>
+          <input class="checkbox" type="checkbox" name="optfor"/>
+          </div>
+					<button>Sign up</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="username" placeholder="Username" required=""/>
+					<input type="password" name="pswd" placeholder="Password" required=""/>
+					<button>Login</button>
+				</form>
+    </div>
+  </div>
+  )
 };
 
 export default AuthForm;

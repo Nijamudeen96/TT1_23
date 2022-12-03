@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, React } from "react";
+import "./SignupContent.css";
 
 const SignupContent = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
