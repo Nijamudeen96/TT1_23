@@ -112,3 +112,15 @@ def get_transaction_details(userid: str, AccountID: str):
         return mycursor.fetchall()
     except Exception as e:
         return {"error": str(e)}
+
+def get_acc_info(userid: str) -> dict[str, str]:
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "SELECT * FROM Bank.BankAccount left join Bank.User on Bank.BankAccount.UserID = Bank.User.UserID where UserID = %s",
+            (userid,),
+        )
+        return {colname: value for colname, value
+            in zip(['AccountID', 'UserID', 'AccountType', 'AccountBalance', 'UserID', 'Username', 'Password', 'Firstname', 'Lastname', 'Email', 'Address', 'OptIntoPhyStatements'], mycursor.fetchone())}
+    except Exception as e:
+        return {"error": str(e)}
