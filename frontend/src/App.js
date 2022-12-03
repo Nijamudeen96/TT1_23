@@ -15,7 +15,8 @@ function App() {
     <Route path="/signup" exact>
       <SignupPage />
     </Route>
- 
+    
+
     </Switch>
   );
 }
