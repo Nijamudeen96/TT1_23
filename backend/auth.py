@@ -12,7 +12,7 @@ def login(username, password):
     if int(userid):
         auth_token = jwt.encode({"username": username}, os.environ.get('JWT_SECRET'), algorithm="HS256")
         result = {
-            "user_id" : 1,
+            "user_id" : userid,
             "username" : username,
             "auth_token" : auth_token
         }
