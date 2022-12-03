@@ -13,10 +13,10 @@ def login():
 
 @app.route("/get_user/<userid>")
 def get_user(userid: str) -> dict[str, str]:
-   #  if auth.is_valid_auth(request.headers.get("Authorization")):
-   return db.get_user(userid)
-   #  else:
-   #      return {"error": "Not authorized"}
+    if auth.is_valid_auth(request.headers.get("Authorization")):
+        return db.get_user(userid)
+    else:
+        return {"error": "Not authorized"}
 
 
 @app.route("/update_user/<userid>", methods=["POST"])
@@ -25,7 +25,7 @@ def update_user(userid: str) -> dict[str, str]:
         if auth.is_valid_auth(request.headers.get("Authorization")):
             email = request.get_json()["email"]
             address = request.get_json()["address"]
-            update_user(userid, email, address)
+            db.update_user(userid, email, address)
             return {"success": "User updated"}
         else:
             return {"error": "Not authorized"}
@@ -37,7 +37,7 @@ def update_user(userid: str) -> dict[str, str]:
 def get_bank_info(userid: str) -> dict[str, str]:
     try:
         if auth.is_valid_auth(request.headers.get("Authorization")):
-            return get_bank_info(userid)
+            return db.get_bank_info(userid)
         else:
             return {"error": "Not authorized"}
     except Exception as e:
