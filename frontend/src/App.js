@@ -1,12 +1,22 @@
-import Homepage from './Homepage'
+import { Switch, Route, Redirect } from 'react-router-dom';
+import './App.css';
+import LoginPage from "./Pages/LoginPage";
+import SignupPage from "./Pages/SignupPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Homepage />
-      </header>
-    </div>
+    <Switch>
+    <Route path="/" exact>
+      <Redirect to="/login" />
+    </Route>
+    <Route path="/login" exact>
+      <LoginPage />
+    </Route>
+    <Route path="/signup" exact>
+      <SignupPage />
+    </Route>
+ 
+    </Switch>
   );
 }
 
