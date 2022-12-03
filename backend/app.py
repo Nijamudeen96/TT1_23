@@ -1,6 +1,7 @@
 from flask import Flask, request
 import auth
 import db
+
 app = Flask(__name__)
 
 
@@ -38,6 +39,46 @@ def get_bank_info(userid: str):
     try:
         if auth.is_valid_auth(request.headers.get("Authorization")):
             return db.get_bank_info(userid)
+        else:
+            return {"error": "Not authorized"}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.route("/insert_transaction", methods=["POST"])
+def insert_transaction(
+    AccountID: str,
+    ReceivingAccountID: str,
+    Date,
+    TransactionAmount: str,
+    Comment: str,
+):
+    try:
+        if auth.is_valid_auth(request.headers.get("Authorization")):
+            AccountID = request.get_json()["AccountID"]
+            ReceivingAccountID = request.get_json()["ReceivingAccountID"]
+            Date = request.get_json()["Date"]
+            TransactionAmount = request.get_json()["TransactionAmount"]
+            Comment = request.get_json()["Comment"]
+            db.insert_transaction(
+                AccountID, ReceivingAccountID, Date, TransactionAmount, Comment
+            )
+            return {"success": "Transaction inserted"}
+        else:
+            return {"error": "Not authorized"}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.route("delete_transaction", methods=["POST"])
+def delete_transaction(
+    TransactionID: str,
+):
+    try:
+        if auth.is_valid_auth(request.headers.get("Authorization")):
+            TransactionID = request.get_json()["TransactionID"]
+            db.delete_transaction(TransactionID)
+            return {"success": "Transaction deleted"}
         else:
             return {"error": "Not authorized"}
     except Exception as e:
