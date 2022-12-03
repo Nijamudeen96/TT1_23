@@ -9,13 +9,17 @@ const Homepage = ({title, summary, useroverview}) => {
     return ( <ul>
         <h1>{title}</h1>  
         <h2>Welcome, {summary.Firstname}  {summary.Lastname}!</h2>
-
+        
+        <table>
+            <tr>
+                <th>Account ID</th>
+                <th>Account Type</th>
+                <th>Balance</th>
+            </tr>
         {useroverview.map((element) => (
-            <Accountitem
-            AccountID={element.AccountID}
-            AccountType={element.AccountType}
-            AccountBalance={element.AccountBalance} />
+            <Accountitem AccountID={element.AccountID} AccountType={element.AccountType} AccountBalance={element.AccountBalance} />
         ))}
+        </table>
     </ul>
   );
 }
@@ -39,13 +43,13 @@ Homepage.defaultProps = {
             "AccountID": 621156213,
             "UserID": 1,
             "AccountType": "Saving",
-            "AcccountBalance": 70200.71
+            "AccountBalance": 70200.71
         },
         {
             "AccountID": 958945214,
             "UserID": 1,
             "AccountType": "Current",
-            "AcccountBalance": 99720.46
+            "AccountBalance": 99720.46
         }
     ]
 }
