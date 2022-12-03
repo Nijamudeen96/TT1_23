@@ -1,22 +1,60 @@
 from flask import Flask, request
 import auth
+from db import *
 
 app = Flask(__name__)
 
-@app.route('/login/v1')
+
+@app.route("/")
+def hello_world():
+    return "Hello World"
+
+
+@app.route("/login")
 def login():
-   username =  request.get_json()['username']
-   password =  request.get_json()['password']
-   return auth.login(username, password)
+    username = request.get_json()["username"]
+    password = request.get_json()["password"]
+    return auth.login(username, password)
 
-# @app.route('/decode')
-# def decode():
-#    auth.is_valid_auth(request.headers.get('Authorization'))
-#    return auth.is_valid_auth(auth_token)
 
-@app.route('/user/overview')
-def user_overview():
-   return{}
+@app.route("/decode")
+def decode():
+    auth_token = request.headers.get("Authorization")
+    return auth.is_valid_auth(auth_token)
 
-if __name__ == '__main__':
-   app.run()
+
+@app.route("/get_user/<userid>")
+def get_user(userid: str) -> dict[str, str]:
+    if auth.is_valid_auth(request.headers.get("Authorization")):
+        return get_user(userid)
+    else:
+        return {"error": "Not authorized"}
+
+
+@app.route("/update_user/<userid>", methods=["POST"])
+def update_user(userid: str) -> dict[str, str]:
+    try:
+        if auth.is_valid_auth(request.headers.get("Authorization")):
+            email = request.get_json()["email"]
+            address = request.get_json()["address"]
+            update_user(userid, email, address)
+            return {"success": "User updated"}
+        else:
+            return {"error": "Not authorized"}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.route("/get_bank_info/<userid>")
+def get_bank_info(userid: str) -> dict[str, str]:
+    try:
+        if auth.is_valid_auth(request.headers.get("Authorization")):
+            return get_bank_info(userid)
+        else:
+            return {"error": "Not authorized"}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+if __name__ == "__main__":
+    app.run()
