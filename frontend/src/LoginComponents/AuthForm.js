@@ -4,14 +4,14 @@ import AuthContext from "../Store/auth-context";
 
 const AuthForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
-  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
 const history = useHistory(); 
   const authCtx = useContext(AuthContext);
   
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
+  const usernameChangeHandler = (event) => {
+    setEnteredUsername(event.target.value);
   };
 
   const passwordChangeHandler = (event) => {
@@ -25,7 +25,7 @@ const history = useHistory();
       {
         method: "POST",
         body: JSON.stringify({
-          email: enteredEmail,
+          email: enteredUsername,
           password: enteredPassword,
           returnSecureToken: true,
         }),
@@ -55,12 +55,12 @@ const history = useHistory();
   return (
     <form onSubmit={SubmitHandler}>
       <div>
-        <label htmlFor="email">User ID</label>
+        <label htmlFor="username">Username</label>
         <input
-          type="email"
-          id="email"
-          value={enteredEmail}
-          onChange={emailChangeHandler}
+          type="text"
+          id="username"
+          value={enteredUsername}
+          onChange={usernameChangeHandler}
         />
       </div>
       <div>
