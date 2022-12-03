@@ -60,11 +60,11 @@ const AuthForm = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
-  useEffect(() => {
-    setEnteredUsername(MockData[0]['id'])
-    setEnteredPassword(MockData[0]['password'])
+  // useEffect(() => {
+  //   setEnteredUsername(MockData[0]['id'])
+  //   setEnteredPassword(MockData[0]['password'])
     
-      } ,[])
+  // } ,[])
 
 const history = useHistory(); 
   const authCtx = useContext(AuthContext);
@@ -80,39 +80,40 @@ const history = useHistory();
   const SubmitHandler = (event) => {
     event.preventDefault();
     history.replace('/profile')}
-//     fetch
-//       ('127.0.0.1:5000',
-//       {
-//         method: "POST",
-//         body: JSON.stringify({
-//           email: enteredUsername,
-//           password: enteredPassword,
-//           returnSecureToken: true,
-//         }),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       })
-//       .then((res) => {
-//         if (res.ok) {
-//             return res.json();
-//         } else {
-//             return res.json().then((data) => {
-//                 let errorMessage = 'Authentication failed!';
-//                 throw new Error(errorMessage);
-//             });
-//         }
-//       })
-//       .then((data) => {
-//         authCtx.login(data.idToken);
-//         history.replace('/profile');
-//       })
-//       .catch((err)=>{
-//         alert(err.message);
-//       });
-//   };
+    fetch
+      ('127.0.0.1:5000/login',
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: enteredUsername,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.ok) {
+            return res.json();
+        } else {
+            return res.json().then((data) => {
+                let errorMessage = 'Authentication failed!';
+                throw new Error(errorMessage);
+            });
+        }
+      })
+      .then((data) => {
+        authCtx.login(data.idToken);
+        localStorage.setItem('userid', data.userid)
+        history.replace('/profile');
+      })
+      .catch((err)=>{
+        alert(err.message);
+      });
+  
 
-  return (
+  // return (
     // <form onSubmit={SubmitHandler}>
     //   <div>
     //     <label htmlFor="username">Username</label>
@@ -141,6 +142,7 @@ const history = useHistory();
     //     </Link>
     //   </div>
     // </form>
+    return(
     <div class="main">  	
 		<input type="checkbox" id="chk" aria-hidden="true"/>
 
@@ -169,7 +171,6 @@ const history = useHistory();
 				</form>
     </div>
   </div>
-  )
-};
+  )};
 
 export default AuthForm;
