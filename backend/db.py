@@ -95,3 +95,18 @@ def delete_transaction(TransactionID: str) -> None:
         mydb.commit()
     except Exception as e:
         return {"error": str(e)}
+
+def get_transaction_details(userid: str, AccountID: str):
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            select * from bank.scheduledtransactions 
+            join (select Bank.BankAccount.UserID, BankAccount.AccountID from Bank.BankAccount) as t1
+            on t1.AccountID = bank.scheduledtransactions.AccountID
+            where userid = %s
+            """(userid)
+        )
+        return mycursor.fetchall()
+    except Exception as e:
+        return {"error": str(e)}
