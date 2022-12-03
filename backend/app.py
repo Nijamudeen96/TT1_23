@@ -12,7 +12,7 @@ def login():
 
 
 @app.route("/get_user/<userid>")
-def get_user(userid: str) -> dict[str, str]:
+def get_user(userid: str):
     if auth.is_valid_auth(request.headers.get("Authorization")):
         return db.get_user(userid)
     else:
@@ -20,7 +20,7 @@ def get_user(userid: str) -> dict[str, str]:
 
 
 @app.route("/update_user/<userid>", methods=["POST"])
-def update_user(userid: str) -> dict[str, str]:
+def update_user(userid: str):
     try:
         if auth.is_valid_auth(request.headers.get("Authorization")):
             email = request.get_json()["email"]
@@ -34,7 +34,7 @@ def update_user(userid: str) -> dict[str, str]:
 
 
 @app.route("/get_bank_info/<userid>")
-def get_bank_info(userid: str) -> dict[str, str]:
+def get_bank_info(userid: str):
     try:
         if auth.is_valid_auth(request.headers.get("Authorization")):
             return db.get_bank_info(userid)

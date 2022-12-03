@@ -7,7 +7,7 @@ print(str(mydb))
 print("connectedddddd")
 
 
-def login_user(username, password):
+def login_user(username: str, password: str):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -20,7 +20,7 @@ def login_user(username, password):
         return {"error": str(e)}
 
 
-def is_user(username):
+def is_user(username: str):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -31,7 +31,7 @@ def is_user(username):
         return {"error": str(e)}
 
 
-def get_user(userid: str) -> dict[str, str]:
+def get_user(userid: str):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -43,7 +43,7 @@ def get_user(userid: str) -> dict[str, str]:
         return {"error": str(e)}
 
 
-def update_user(userid: str, email: str, address: str) -> None:
+def update_user(userid: str, email: str, address: str):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -55,7 +55,7 @@ def update_user(userid: str, email: str, address: str) -> None:
         return {"error": str(e)}
 
 
-def get_bank_info(userid: str) -> dict[str, str]:
+def get_bank_info(userid: str):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -73,7 +73,7 @@ def insert_transaction(
     Date: datetime,
     TransactionAmount: str,
     Comment: str,
-) -> None:
+):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -85,7 +85,7 @@ def insert_transaction(
         return {"error": str(e)}
 
 
-def delete_transaction(TransactionID: str) -> None:
+def delete_transaction(TransactionID: str):
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -96,6 +96,7 @@ def delete_transaction(TransactionID: str) -> None:
     except Exception as e:
         return {"error": str(e)}
 
+
 def get_transaction_details(userid: str, AccountID: str):
     try:
         mycursor = mydb.cursor()
@@ -105,7 +106,8 @@ def get_transaction_details(userid: str, AccountID: str):
             join (select Bank.BankAccount.UserID, BankAccount.AccountID from Bank.BankAccount) as t1
             on t1.AccountID = bank.scheduledtransactions.AccountID
             where userid = %s
-            """(userid)
+            """,
+            (userid,),
         )
         return mycursor.fetchall()
     except Exception as e:
