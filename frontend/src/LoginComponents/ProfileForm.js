@@ -1,6 +1,8 @@
 import {Link, useHistory} from "react-router-dom";
 import { useState, useEffect, useContext, React } from "react";
 import AuthContext from "../Store/auth-context";
+import "./ProfileForm.css";
+
 const MockData = [
     {
         "UserID": 1,
@@ -57,25 +59,43 @@ const MockData = [
 
 const ProfileForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredFirstName, setEnteredFirstName] = useState("");
+  const [enteredLastName, setEnteredLastName] = useState("");
   const [enteredAddress, setEnteredAddress] = useState("");
-  const [enteredId, setEnteredId] = useState("");
 
   useEffect(() => {
+setEnteredUsername(MockData[0]['username'])
 setEnteredEmail(MockData[0]['email'])
-setEnteredAddress(MockData[0]['text'])
-setEnteredId(MockData[0]['id'])
+setEnteredPassword(MockData[0]['password'])
+setEnteredFirstName(MockData[0]['firstname'])
+setEnteredLastName(MockData[0]['lastname'])
+setEnteredAddress(MockData[0]['address'])
+
   } ,[])
 
 const history = useHistory(); 
   const authCtx = useContext(AuthContext);
 
-  const idChangeHandler = (event) => {
-    setEnteredId(event.target.value);
+  const usernameChangeHandler = (event) => {
+    setEnteredUsername(event.target.value);
   };
-  
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
+  };
+
+  const passwordChangeHandler = (event) => {
+    setEnteredPassword(event.target.value);
+  };
+
+  const firstNameChangeHandler = (event) => {
+    setEnteredFirstName(event.target.value);
+  };
+
+  const lastNameChangeHandler = (event) => {
+    setEnteredLastName(event.target.value);
   };
 
   const addressChangeHandler = (event) => {
@@ -122,7 +142,34 @@ const history = useHistory();
   return (
     <form onSubmit={SubmitHandler}>
       <div>
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="username">Username</label>
+        <input
+          type="disabled"
+          id="username"
+          // value={enteredUsername}
+          value="test"
+          onChange={usernameChangeHandler}/>
+      </div>
+      <div>
+        <label htmlFor="firstName">First Name</label>
+        <input
+          type="disabled"
+          id="firstname"
+          // value={enteredFirstName}
+          value="test"
+          onChange={firstNameChangeHandler}/>
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          type="disabled"
+          id="lastname"
+          //value={enteredLastName}
+          value="test"
+          onChange={lastNameChangeHandler}/>
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           id="email"
@@ -131,22 +178,12 @@ const history = useHistory();
         />
       </div>
       <div>
-        <label htmlFor="id">Address</label>
+        <label htmlFor="address">Address</label>
         <input
           type="text"
           id="address"
           value={enteredAddress}
-          onChange={addressChangeHandler}
-        />
-      </div>
-      <div>
-        <label htmlFor="id">Username</label>
-        <input
-          type="text"
-          id="id"
-          value={enteredId}
-          onChange={idChangeHandler}
-        />
+          onChange={addressChangeHandler}/>
       </div>
       <div>
         <button type="submit">Confirm</button>
