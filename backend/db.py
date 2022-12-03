@@ -1,3 +1,4 @@
+from datetime import datetime
 import mysql.connector
 
 mydb = mysql.connector.connect(host="localhost", user="root", password="")
@@ -69,5 +70,27 @@ def get_bank_info(userid: str) -> dict[str, str]:
             (userid,),
         )
         return mycursor.fetchone()
+    except Exception as e:
+        return {"error": str(e)}
+
+def insert_transaction(AccountID: str, ReceivingAccountID: str, Date: datetime, TransactionAmount: str, Comment: str) -> None:
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "insert into bank.scheduledtransactions (AccountID, ReceivingAccountID, Date, TransactionAmount, Comment) values %s, %s, %s, %s, %s",
+            (AccountID, ReceivingAccountID, Date, TransactionAmount, Comment),
+        )
+        mydb.commit()
+    except Exception as e:
+        return {"error": str(e)}
+
+def delete_transaction(TransactionID: str) -> None:
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "delete from bank.scheduledtransactions where TransactionID = %s",
+            (TransactionID),
+        )
+        mydb.commit()
     except Exception as e:
         return {"error": str(e)}
