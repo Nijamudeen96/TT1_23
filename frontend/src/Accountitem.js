@@ -2,12 +2,11 @@ import React from 'react'
 
 const Accountitem = ({AccountID, AccountType, AccountBalance}) => {
   return (
-    <table>
         <tr>
-            {AccountID} {AccountType} {AccountBalance}
+            <td>{AccountID} </td>
+            <td>{AccountType}</td> 
+            <td>{AccountBalance} SGD</td>
         </tr>
-        
-    </table>
   )
 }
 

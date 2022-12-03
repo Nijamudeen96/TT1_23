@@ -1,0 +1,23 @@
+label {
+    font-size: small;
+    display: flex;
+    margin: auto;
+}
+
+input {
+    width: 60%;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: auto;
+	padding: 10px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+    height: 30px;
+}
+
+form div {
+    display:flex;
+    height: 50px;
+}
