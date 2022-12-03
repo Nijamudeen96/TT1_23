@@ -1,7 +1,6 @@
 from flask import Flask, request
 import auth
-from db import *
-
+import db
 app = Flask(__name__)
 
 
@@ -14,10 +13,10 @@ def login():
 
 @app.route("/get_user/<userid>")
 def get_user(userid: str) -> dict[str, str]:
-    if auth.is_valid_auth(request.headers.get("Authorization")):
-        return get_user(userid)
-    else:
-        return {"error": "Not authorized"}
+   #  if auth.is_valid_auth(request.headers.get("Authorization")):
+   return db.get_user(userid)
+   #  else:
+   #      return {"error": "Not authorized"}
 
 
 @app.route("/update_user/<userid>", methods=["POST"])

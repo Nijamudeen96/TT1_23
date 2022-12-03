@@ -42,10 +42,11 @@ def get_user(userid: str) -> dict[str, str]:
     try:
         mycursor = mydb.cursor()
         mycursor.execute(
-            "SELECT UserId, Username, Firstname, Lastname, Email, Address, OptIntoPhyStatements FROM users WHERE userid = %s",
+            "SELECT UserId, Username, Firstname, Lastname, Email, Address, OptIntoPhyStatements FROM bank.user WHERE userid = %s",
             (userid,),
         )
-        return mycursor.fetchone()
+        return {colname: value for colname, value
+            in zip(["UserId", "Username", "Firstname", "Lastname", "Email", "Address", "OptIntoPhyStatements"], mycursor.fetchone())}
     except Exception as e:
         return {"error": str(e)}
 

@@ -5,6 +5,7 @@ import json
 from dotenv import load_dotenv
 
 load_dotenv()
+counter = 0
 
 def login(username, password):
     userid = db.login_user(username, password)
@@ -23,5 +24,6 @@ def login(username, password):
     return json.dumps(result)
 
 def is_valid_auth(msg):
+    print(msg)
     decoded_username = jwt.decode(msg, os.environ.get('JWT_SECRET'), algorithms="HS256")
     return db.is_user(decoded_username)
