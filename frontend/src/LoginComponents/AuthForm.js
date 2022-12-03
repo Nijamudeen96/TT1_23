@@ -1,12 +1,70 @@
 import {Link, useHistory} from "react-router-dom";
-import { useState, useContext, React } from "react";
+import { useState, useEffect, useContext, React } from "react";
 import AuthContext from "../Store/auth-context";
 import "./AuthForm.css";
+const MockData = [
+    {
+        "UserID": 1,
+        "Username": "ExecutiveDBS",
+        "Password": "DBSBestBank2022",
+        "Firstname": "Tom",
+        "Lastname": "Lim",
+        "Email": "TomLim@easymail.com",
+        "Address": "Block 123 Serangoon Garden #10-129",
+        "OptIntoPhyStatements": 0
+    },
+    {
+        "UserID": 2,
+        "Username": "SeederDBS",
+        "Password": "iWant2JoinDBS",
+        "Firstname": "Mary",
+        "Lastname": "Tan",
+        "Email": "MaryTan@simplemail.com",
+        "Address": "Block 234 Changi Business Park #50-123",
+        "OptIntoPhyStatements": 1
+    },
+    {
+        "UserID": 3,
+        "Username": "AcerDBS",
+        "Password": "Top5Seeder",
+        "Firstname": "Gary",
+        "Lastname": "Ong",
+        "Email": "GaryOng@easymail.com",
+        "Address": "Block 345 Jurong Business Park #25-214",
+        "OptIntoPhyStatements": 0
+    },
+    {
+        "UserID": 4,
+        "Username": "AssociateDBS",
+        "Password": "Whatis2Years",
+        "Firstname": "Harry",
+        "Lastname": "Goh",
+        "Email": "HarryGoh@bestbank.com",
+        "Address": "Block 456 One North Fusionopolis #34-743",
+        "OptIntoPhyStatements": 0
+    },
+    {
+        "UserID": 5,
+        "Username": "PresidentDBS",
+        "Password": "Multiplier3.5%",
+        "Firstname": "Cheryl",
+        "Lastname": "Chia",
+        "Email": "CherylChia@bestbank.com",
+        "Address": "Block 567 Marina Bay Sands #63-743",
+        "OptIntoPhyStatements": 1
+    }
+]
 
 const AuthForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
+
+  useEffect(() => {
+    setEnteredUsername(MockData[0]['id'])
+    setEnteredPassword(MockData[0]['password'])
+    
+      } ,[])
 
 const history = useHistory(); 
   const authCtx = useContext(AuthContext);
@@ -21,37 +79,38 @@ const history = useHistory();
 
   const SubmitHandler = (event) => {
     event.preventDefault();
-    fetch
-      ('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC7bV6EruS7OcpFi8wpZINsxCbVfE4PCPY',
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredUsername,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        if (res.ok) {
-            return res.json();
-        } else {
-            return res.json().then((data) => {
-                let errorMessage = 'Authentication failed!';
-                throw new Error(errorMessage);
-            });
-        }
-      })
-      .then((data) => {
-        authCtx.login(data.idToken);
-        history.replace('/StartingPage');
-      })
-      .catch((err)=>{
-        alert(err.message);
-      });
-  };
+    history.replace('/profile')}
+//     fetch
+//       ('127.0.0.1:5000',
+//       {
+//         method: "POST",
+//         body: JSON.stringify({
+//           email: enteredUsername,
+//           password: enteredPassword,
+//           returnSecureToken: true,
+//         }),
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       })
+//       .then((res) => {
+//         if (res.ok) {
+//             return res.json();
+//         } else {
+//             return res.json().then((data) => {
+//                 let errorMessage = 'Authentication failed!';
+//                 throw new Error(errorMessage);
+//             });
+//         }
+//       })
+//       .then((data) => {
+//         authCtx.login(data.idToken);
+//         history.replace('/profile');
+//       })
+//       .catch((err)=>{
+//         alert(err.message);
+//       });
+//   };
 
   return (
     // <form onSubmit={SubmitHandler}>
@@ -102,10 +161,10 @@ const history = useHistory();
 			</div>
 
 			<div class="login">
-				<form>
+				<form onSubmit={SubmitHandler}>
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="username" placeholder="Username" required=""/>
-					<input type="password" name="pswd" placeholder="Password" required=""/>
+					<input type="id" name="username" placeholder="Username" required="" value={enteredUsername} onChange={usernameChangeHandler}/>
+					<input type="password" name="pswd" placeholder="Password" required="" value={enteredPassword} onChange={passwordChangeHandler}/>
 					<button>Login</button>
 				</form>
     </div>
