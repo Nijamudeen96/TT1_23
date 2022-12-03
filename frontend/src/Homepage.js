@@ -1,12 +1,23 @@
 import PropTypes from 'prop-types'
+import React from 'react'
+import Accountitem from './Accountitem';
 
-const Homepage = ({title, summary}) => {
-  return (
-    <header>
+const Homepage = ({title, summary, useroverview}) => {
+    if (useroverview.length === 0) {
+        return <h2 className=''>Found No Account.</h2>;
+      }//Conditional value of account
+    return ( <ul>
         <h1>{title}</h1>  
-        <h2>Welcome, {summary.Firstname}  {summary.Lastname}!</h2>      
-    </header>
-  )
+        <h2>Welcome, {summary.Firstname}  {summary.Lastname}!</h2>
+
+        {useroverview.map((element) => (
+            <Accountitem
+            AccountID={element.AccountID}
+            AccountType={element.AccountType}
+            AccountBalance={element.AccountBalance} />
+        ))}
+    </ul>
+  );
 }
 
 Homepage.defaultProps = {
