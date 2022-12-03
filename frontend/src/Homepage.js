@@ -9,8 +9,8 @@ const Homepage = ({title, summary, useroverview}) => {
     return ( <ul>
         <h1>{title}</h1>  
         <h2>Welcome, {summary.Firstname}  {summary.Lastname}!</h2>
- 
-        {Homepage.useroverview?.map((element) => (
+
+        {useroverview.map((element) => (
             <Accountitem
             AccountID={element.AccountID}
             AccountType={element.AccountType}
