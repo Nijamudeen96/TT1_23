@@ -7,9 +7,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def login(username, password):
-    userid = 1
+    print("user: ", username, " password: ", password)
+    # userid = 1
     # check database
-    # userid = db.login_user(username, password)
+    userid = db.login_user(username, password)
+    print("userid: ", userid)
     
     if int(userid):
         auth_token = jwt.encode({"username": username}, os.environ.get('JWT_SECRET'), algorithm="HS256")
